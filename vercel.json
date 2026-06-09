@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/records",
+      "destination": "/backend/data/records.json"
+    },
+    {
+      "source": "/uploads/:path*",
+      "destination": "/backend/uploads/:path*"
+    }
+  ]
+}

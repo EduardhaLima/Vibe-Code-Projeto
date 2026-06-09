@@ -4,6 +4,29 @@ window.API = (() => {
   const set = (s) => localStorage.setItem(KEY, JSON.stringify(s));
   const clear = () => localStorage.removeItem(KEY);
 
+  const staticRecordUrl = '/backend/data/records.json';
+
+  function normalizeStaticRecords(records) {
+    if (!Array.isArray(records)) return [];
+    return records
+      .map((record) => ({
+        ...record,
+        media: Array.isArray(record.media)
+          ? record.media.map((item) => ({
+              ...item,
+              url: item?.url?.startsWith('/uploads/') ? `/backend${item.url}` : item?.url,
+            }))
+          : [],
+      }))
+      .sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+  }
+
+  async function readStaticRecords() {
+    const res = await fetch(staticRecordUrl, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Erro ${res.status}`);
+    return normalizeStaticRecords(await res.json());
+  }
+
   async function req(path, { method = 'GET', body, isForm = false } = {}) {
     const headers = {};
     if (!isForm && body) headers['Content-Type'] = 'application/json';
@@ -21,10 +44,21 @@ window.API = (() => {
 
       const data = await res.json().catch(() => ({}));
 
+      if (!res.ok && method === 'GET' && path === '/api/records' && [404, 405].includes(res.status)) {
+        return await readStaticRecords();
+      }
+
       if (!res.ok) throw new Error(data.error || `Erro ${res.status}`);
+
+      if (method === 'GET' && path === '/api/records' && !Array.isArray(data)) {
+        return await readStaticRecords();
+      }
 
       return data;
     } catch (err) {
+      if (method === 'GET' && path === '/api/records') {
+        return await readStaticRecords();
+      }
       if (err.name === 'AbortError') {
         throw new Error('Servidor demorou para responder');
       }
