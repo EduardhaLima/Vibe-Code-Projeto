@@ -1,21 +1,6 @@
 // Auth simples no cliente (localStorage). Sem servidor, sem JWT.
 (() => {
-  const form = document.getElementById('auth-form');
-
-  // Se este arquivo for carregado por engano fora da tela de login,
-  // não redireciona em loop nem quebra a página.
-  if (!form) {
-    const isMural = document.getElementById('grid');
-    const muralScriptLoaded = document.querySelector('script[src*="mural.js"]');
-    if (isMural && !muralScriptLoaded) {
-      const script = document.createElement('script');
-      script.src = 'frontend/js/mural.js';
-      document.body.appendChild(script);
-    }
-    return;
-  }
-
-  if (API.get()) { location.href = 'mural.html'; return; }
+  if (API.get()) { location.href = '/mural.html'; return; }
 
   const USERS_KEY = 'avistamento.users';
   const getUsers = () => { try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; } catch { return {}; } };
@@ -26,6 +11,7 @@
 
   let mode = 'login';
   const tabs = document.querySelectorAll('.tab');
+  const form = document.getElementById('auth-form');
   const msg = document.getElementById('auth-msg');
   const submit = form.querySelector('button[type=submit]');
 

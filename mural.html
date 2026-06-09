@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Avistamento — Mural</title>
+<link rel="stylesheet" href="frontend/css/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Avistamento</h1>
+    <nav>
+      <a href="mural.html" class="link active">Mural</a>
+      <a href="upload.html" class="link">Registrar</a>
+      <span id="who" class="muted"></span>
+      <button id="logout" class="ghost" type="button">Sair</button>
+    </nav>
+  </header>
+  <main class="container">
+    <div id="grid" class="grid"></div>
+    <p id="empty" class="muted" hidden>Nenhum avistamento ainda.</p>
+  </main>
+  <script src="frontend/js/api.js"></script>
+  <script src="frontend/js/auth.js"></script>
+</body>
+</html>

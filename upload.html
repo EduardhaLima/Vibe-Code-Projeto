@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Avistamento — Registrar</title>
+<link rel="stylesheet" href="frontend/css/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Avistamento</h1>
+    <nav>
+      <a href="mural.html" class="link">Mural</a>
+      <a href="upload.html" class="link active">Registrar</a>
+      <span id="who" class="muted"></span>
+      <button id="logout" class="ghost" type="button">Sair</button>
+    </nav>
+  </header>
+  <main class="container narrow">
+    <h2>Novo avistamento</h2>
+    <form id="upload-form">
+      <label>Espécie<input name="species" required minlength="2" maxlength="80" /></label>
+      <label>Data<input name="date" type="date" required /></label>
+      <label>Local<input name="location" required minlength="2" maxlength="120" /></label>
+      <label>Notas<textarea name="notes" maxlength="1000" rows="3"></textarea></label>
+      <label>Mídia (até 5, jpg/png/webp/mp4, 25MB cada)
+        <input name="media" type="file" multiple accept="image/jpeg,image/png,image/webp,video/mp4" required />
+      </label>
+      <button type="submit" class="primary">Enviar</button>
+      <p id="up-msg" class="msg"></p>
+    </form>
+  </main>
+  <script src="frontend/js/api.js"></script>
+  <script src="frontend/js/upload.js"></script>
+</body>
+</html>
