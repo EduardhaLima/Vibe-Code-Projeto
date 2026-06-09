@@ -45,6 +45,6 @@
     }
 
     API.set({ username });
-    location.href = '/mural.html';
+    location.href = 'mural.html';
   });
 })();

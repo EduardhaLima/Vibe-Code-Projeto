@@ -40,10 +40,10 @@
     fd.append('username', session.username);
 
     try {
-      await API.req('/api/records', { method: 'POST', body: fd, isForm: true });
+      await API.req('../backend/routes/record', { method: 'POST', body: fd, isForm: true });
       msg.textContent = 'Enviado com sucesso!'; msg.classList.add('ok');
       form.reset();
-      setTimeout(() => location.href = '/mural.html', 700);
+      setTimeout(() => location.href = '../mural.html', 700);
     } catch (err) {
       msg.textContent = err.message;
     }
