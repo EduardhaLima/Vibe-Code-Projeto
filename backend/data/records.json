@@ -1,0 +1,69 @@
+[
+  {
+    "id": "seed-1",
+    "userId": "seed",
+    "username": "naturalista",
+    "species": "Tucano-toco",
+    "date": "2025-03-12",
+    "location": "Parque Nacional de Brasília",
+    "notes": "Avistado no início da manhã, próximo ao mirante.",
+    "media": [
+      {
+        "url": "https://images.unsplash.com/photo-1551522435-a13afa10f103?w=900",
+        "mime": "image/jpeg",
+        "size": 0
+      }
+    ],
+    "createdAt": "2025-03-12T11:00:00.000Z"
+  },
+  {
+    "id": "seed-2",
+    "userId": "seed",
+    "username": "trilheira",
+    "species": "Onça-pintada",
+    "date": "2025-02-02",
+    "location": "Pantanal Norte",
+    "notes": "Cruzando uma estrada de terra ao entardecer.",
+    "media": [
+      {
+        "url": "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=900",
+        "mime": "image/jpeg",
+        "size": 0
+      }
+    ],
+    "createdAt": "2025-02-02T22:00:00.000Z"
+  },
+  {
+    "id": "seed-3",
+    "userId": "seed",
+    "username": "marinha",
+    "species": "Tartaruga-verde",
+    "date": "2025-01-18",
+    "location": "Fernando de Noronha",
+    "notes": "Nadando em águas rasas perto da Baía do Sancho.",
+    "media": [
+      {
+        "url": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=900",
+        "mime": "image/jpeg",
+        "size": 0
+      }
+    ],
+    "createdAt": "2025-01-18T15:30:00.000Z"
+  },
+  {
+    "id": "688fc0d4-eb44-48ff-b3d1-f6bc71eef297",
+    "username": "eduardhalima",
+    "species": "passarinho rindo",
+    "date": "2026-06-09",
+    "location": "recife",
+    "notes": "foto por Leticia em expedição",
+    "media": [
+      {
+        "url": "/uploads/847523e6-20bf-449b-b806-e34ffa512866.jpg",
+        "mime": "image/jpeg",
+        "size": 21225
+      }
+    ],
+    "createdAt": "2026-06-09T13:44:42.641Z"
+  }
+]
