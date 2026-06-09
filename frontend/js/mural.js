@@ -6,25 +6,52 @@
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty');
 
-  const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const esc = (s = '') => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 
   function media(m) {
-    if (m.mime?.startsWith('video/')) return `<video src="${esc(m.url)}" controls preload="metadata"></video>`;
-    return `<img loading="lazy" src="${esc(m.url)}" alt="" />`;
+    if (!m?.url) {
+      return '<div class="media-placeholder">Sem mídia</div>';
+    }
+
+    if (m.mime?.startsWith('video/')) {
+      return `<video src="${esc(m.url)}" controls preload="metadata"></video>`;
+    }
+
+    return `<img loading="lazy" src="${esc(m.url)}" alt="Registro de avistamento" onerror="this.outerHTML='<div class=\'media-placeholder\'>Mídia indisponível</div>'" />`;
   }
 
-  API.req('../backend/routes/record').then(records => {
-    if (!records.length) { empty.hidden = false; return; }
-    grid.innerHTML = records.map(r => `
-      <article class="card">
-        ${media(r.media[0])}
-        <div class="meta">
-          <h3>${esc(r.species)}</h3>
-          <small>${esc(r.location)} · ${esc(r.date)}</small>
-          ${r.notes ? `<p>${esc(r.notes)}</p>` : ''}
-          <small class="muted">por @${esc(r.username)}</small>
-        </div>
-      </article>
-    `).join('');
-  }).catch(err => { empty.hidden = false; empty.textContent = err.message; });
+  async function loadRecords() {
+    try {
+      empty.hidden = true;
+      grid.innerHTML = '<p class="muted">Carregando mural...</p>';
+
+      const records = await API.req('/api/records');
+
+      if (!Array.isArray(records) || records.length === 0) {
+        grid.innerHTML = '';
+        empty.hidden = false;
+        empty.textContent = 'Nenhum avistamento ainda.';
+        return;
+      }
+
+      grid.innerHTML = records.map(r => `
+        <article class="card">
+          ${media(r.media?.[0])}
+          <div class="meta">
+            <h3>${esc(r.species)}</h3>
+            <small>${esc(r.location)} · ${esc(r.date)}</small>
+            ${r.notes ? `<p>${esc(r.notes)}</p>` : ''}
+            <small class="muted">por @${esc(r.username)}</small>
+          </div>
+        </article>
+      `).join('');
+    } catch (err) {
+      console.error(err);
+      grid.innerHTML = '';
+      empty.hidden = false;
+      empty.textContent = `Erro ao carregar o mural: ${err.message}`;
+    }
+  }
+
+  loadRecords();
 })();

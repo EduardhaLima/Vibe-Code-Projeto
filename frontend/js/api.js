@@ -7,18 +7,35 @@ window.API = (() => {
   async function req(path, { method = 'GET', body, isForm = false } = {}) {
     const headers = {};
     if (!isForm && body) headers['Content-Type'] = 'application/json';
-    const res = await fetch(path, {
-      method,
-      headers,
-      body: isForm ? body : body ? JSON.stringify(body) : undefined,
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || `Erro ${res.status}`);
-    return data;
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const res = await fetch(path, {
+        method,
+        headers,
+        body: isForm ? body : body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) throw new Error(data.error || `Erro ${res.status}`);
+
+      return data;
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        throw new Error('Servidor demorou para responder');
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
   }
 
-  function logout() { clear(); location.href = '../index.html'; }
-  function requireAuth() { if (!get()) location.href = '../index.html'; }
+  function logout() { clear(); location.href = '/index.html'; }
+  function requireAuth() { if (!get()) location.href = '/index.html'; }
 
   function renderWho() {
     const el = document.getElementById('who');
