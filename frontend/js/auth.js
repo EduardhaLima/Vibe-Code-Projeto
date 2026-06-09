@@ -1,6 +1,6 @@
 // Auth simples no cliente (localStorage). Sem servidor, sem JWT.
 (() => {
-  if (API.get()) { location.href = './mural.html'; return; }
+  if (API.get()) { location.href = '/mural.html'; return; }
 
   const USERS_KEY = 'avistamento.users';
   const getUsers = () => { try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; } catch { return {}; } };
@@ -45,6 +45,6 @@
     }
 
     API.set({ username });
-    location.href = './mural.html';
+    location.href = 'mural.html';
   });
 })();

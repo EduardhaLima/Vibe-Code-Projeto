@@ -13,7 +13,7 @@
     return `<img loading="lazy" src="${esc(m.url)}" alt="" />`;
   }
 
-  API.req('./api/records').then(records => {
+  API.req('../backend/routes/record').then(records => {
     if (!records.length) { empty.hidden = false; return; }
     grid.innerHTML = records.map(r => `
       <article class="card">
