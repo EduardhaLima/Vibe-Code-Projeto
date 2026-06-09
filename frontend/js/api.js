@@ -17,8 +17,8 @@ window.API = (() => {
     return data;
   }
 
-  function logout() { clear(); location.href = '../index.html'; }
-  function requireAuth() { if (!get()) location.href = '../index.html'; }
+  function logout() { clear(); location.href = './index.html'; }
+  function requireAuth() { if (!get()) location.href = './index.html'; }
 
   function renderWho() {
     const el = document.getElementById('who');
